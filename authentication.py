@@ -39,6 +39,7 @@ def IDToName(ID):
     >>> IDToName("5f820c3958834392b1743125ac05e38c")
     'CaptainSparklez'
     """
+    
     try:
         response = requests.get(UUID_URL + ID, timeout=3)
         if response.status_code == 200:      
@@ -71,13 +72,10 @@ def authenticateCreds(username, password):
     try:
         response = requests.post(AUTH_URL, json=payload, headers=header)
         if response.status_code == 200:
-            response = response.json()
-            print response
             return True
         else:
-            #response.raise_for_status()
             response = response.json()
-            print response
+            print response["errorMessage"]
             return False
 
     except Exception as e:
@@ -97,19 +95,17 @@ def isUnmigrated(username, password):
         "version": 1
     },
     "username": username,
-    "password": password
+    "password": password,
     }
     header = {"Content-Type": "application/json"}
     try:
         response = requests.post(AUTH_URL, json=payload, headers=header)
         if response.status_code == 200:
             response = response.json()
-            print response
             return response["selectedProfile"].get("legacy", False)
         else:
-            #response.raise_for_status()
             response = response.json()
-            print response
+            print response["errorMessage"]
             return False
 
     except Exception as e:
