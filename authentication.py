@@ -115,6 +115,3 @@ def isUnmigrated(username, password):
     except Exception as e:
         print e
         return False
-
-authenticateCreds("sari.poentynen@bbraun.com", "moikka123")
-print isUnmigrated("Dani_2016", "moikka123")
